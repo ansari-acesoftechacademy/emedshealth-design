@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healthcare Slider</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+.healthcare-slider-container {
+    width: 100%;
+    padding: 12px 20px;
+    background: #fff;
+}
+.swiper {
+    width: 100%;
+    border-radius: 20px;
+}
+.swiper-slide {
+    border-radius: 20px;
+    min-height: 300px;
+    background-size: cover;
+    background-position: center;
+}
+.slide-bg-1 { background-image: linear-gradient(135deg,rgba(124,58,237,.9),rgba(79,70,229,.9)); }
+.slide-bg-2 { background-image: linear-gradient(135deg,rgba(147,51,234,.9),rgba(99,102,241,.9)); }
+.slide-bg-3 { background-image: linear-gradient(135deg,rgba(59,130,246,.9),rgba(29,78,216,.9)); }
+
+.slide-content{
+    display:flex;
+    align-items:center;
+    height:100%;
+    padding:40px;
+    color:#fff;
+}
+
+.text-section{ flex:1; }
+.text-section h2{
+    font-size:1.8rem;
+    font-weight:800;
+    margin-bottom:12px;
+}
+.text-section p{
+    font-size:0.9rem;
+    margin-bottom:20px;
+    line-height:1.4;
+}
+
+.illustration-section{
+    flex:1;
+    text-align:center;
+}
+.illustration-section img{
+    max-height:140px;
+    filter:drop-shadow(0 10px 20px rgba(0,0,0,.25));
+}
+
+.cta-button{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:12px 24px;
+    border-radius:50px;
+    font-size:.9rem;
+    font-weight:700;
+    text-decoration:none;
+    color:#fff;
+}
+.btn-green{background:linear-gradient(135deg,#10b981,#059669);}
+.btn-orange{background:linear-gradient(135deg,#f59e0b,#d97706);}
+.btn-blue{background:linear-gradient(135deg,#3b82f6,#1d4ed8);}
+
+.swiper-button-next,
+.swiper-button-prev{
+    width:40px;
+    height:40px;
+    background:rgba(255,255,255,.2);
+    border-radius:50%;
+    color:#fff;
+}
+.swiper-button-next:after,
+.swiper-button-prev:after{
+    font-size:16px;
+    font-weight:700;
+}
+
+@media(max-width:768px){
+    .swiper-slide{min-height:220px;}
+    .slide-content{
+        flex-direction:column;
+        text-align:center;
+        padding:20px;
+    }
+    .text-section h2{font-size:1.1rem;}
+    .text-section p{font-size:.7rem;}
+    .illustration-section img{max-height:70px;}
+    .cta-button{padding:6px 14px;font-size:.65rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="healthcare-slider-container">
+<div class="swiper">
+<div class="swiper-wrapper">
+
+<!-- SLIDE 1 (Image Left) -->
+<div class="swiper-slide slide-bg-1">
+<div class="slide-content">
+    <div class="illustration-section">
+        <img src="https://cdn-icons-png.flaticon.com/512/3067/3067256.png">
+    </div>
+    <div class="text-section">
+        <h2>Complete Online Pharmacy Store</h2>
+        <p>Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.</p>
+        <a href="#" class="cta-button btn-green">
+            <i class="fa-solid fa-pills"></i> Learn More
+        </a>
+    </div>
+</div>
+</div>
+
+<!-- SLIDE 2 (Image Right) -->
+<div class="swiper-slide slide-bg-2">
+<div class="slide-content">
+    <div class="text-section">
+        <h2>Your Trusted Pharmacy Partner</h2>
+        <p>Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.</p>
+        <a href="#" class="cta-button btn-orange">
+            <i class="fa-solid fa-stethoscope"></i> Explore
+        </a>
+    </div>
+    <div class="illustration-section">
+        <img src="https://cdn-icons-png.flaticon.com/512/3022/3022825.png">
+    </div>
+</div>
+</div>
+
+<!-- SLIDE 3 (Image Left) -->
+<div class="swiper-slide slide-bg-3">
+<div class="slide-content">
+    <div class="illustration-section">
+        <img src="https://cdn-icons-png.flaticon.com/512/2785/2785433.png">
+    </div>
+    <div class="text-section">
+        <h2>Save More With Substitutes</h2>
+        <p>Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.</p>
+        <a href="#" class="cta-button btn-blue">
+            <i class="fa-solid fa-heart-pulse"></i> View Benefits
+        </a>
+    </div>
+</div>
+</div>
+
+</div>
+
+<div class="swiper-button-next"></div>
+<div class="swiper-button-prev"></div>
+<div class="swiper-pagination"></div>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<script>
+new Swiper('.swiper',{
+    loop:true,
+    autoplay:{delay:5000,disableOnInteraction:false},
+    speed:800,
+    navigation:{
+        nextEl:'.swiper-button-next',
+        prevEl:'.swiper-button-prev'
+    },
+    pagination:{
+        el:'.swiper-pagination',
+        clickable:true
+    }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Prescription Card Purple</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+body{
+  background:#f4f1ff;
+  font-family:Inter, system-ui, sans-serif;
+  display:flex;
+  align-items:center;
+  min-height:100vh;
+  padding:1rem;
+}
+
+/* MAIN CARD */
+.prescription-card-improved{
+  max-width:1200px;
+  margin:auto;
+  background:#fff;
+  border-radius:28px;
+  box-shadow:0 20px 35px -8px rgba(110,0,255,.15);
+  padding:1.6rem 1.8rem;
+}
+
+/* LEFT RIGHT */
+.left-panel,.right-panel{
+  flex:1;
+  font-size:13px;
+}
+
+/* ICON */
+.rx-icon-circle{
+  width:52px;
+  height:52px;
+  background:#efe6ff;
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  color:#6e00ff;
+}
+
+/* BUTTONS */
+.btn-upload-custom{
+  background:#6e00ff;
+  color:white;
+  font-size:13px;
+  font-weight:600;
+  padding:.55rem 1.4rem;
+  border-radius:50px;
+  border:none;
+  box-shadow:0 6px 18px rgba(110,0,255,.35);
+}
+.btn-reorder{
+  background:linear-gradient(135deg,#6e00ff,#9a00ff);
+  color:#fff;
+  font-size:13px;
+  font-weight:600;
+  padding:.6rem 1.4rem;
+  border-radius:50px;
+  border:none;
+  margin-top:10px;
+  width:100%;
+  box-shadow:0 8px 20px rgba(110,0,255,.45);
+}
+
+/* CALLBACK */
+.callback-fresh{
+  background:#f6f0ff;
+  border-radius:18px;
+  padding:1rem;
+  margin-top:1.4rem;
+  border:1px solid rgba(110,0,255,.18);
+}
+
+/* DIVIDER */
+.divider-soft{
+  width:1px;
+  background:linear-gradient(to bottom,transparent,#d9c9ff,transparent);
+  margin:0 1.5rem;
+}
+
+/* STEPS */
+.steps-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:1rem;
+}
+.step-number{
+  width:28px;
+  height:28px;
+  background:#efe6ff;
+  color:#6e00ff;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:12px;
+}
+
+/* 🔥 RIGHT SIDE MODERN CARDS */
+.offer-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-top:15px;
+}
+
+.offer-card{
+  background:#f6f0ff;
+  border-radius:18px;
+  padding:12px;
+  text-align:center;
+  border:1px solid rgba(110,0,255,.2);
+  box-shadow:0 5px 15px rgba(110,0,255,.15);
+  transition:.3s;
+}
+.offer-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 12px 30px rgba(110,0,255,.35);
+}
+
+/* icon */
+.offer-card img{
+  width:40px;
+  margin-bottom:8px;
+}
+
+/* big percent */
+.offer-big{
+  font-size:34px;
+  font-weight:800;
+  color:#e30000;
+}
+
+/* text */
+.offer-card p{
+  font-size:12px;
+  margin:0;
+}
+
+/* mobile */
+@media(max-width:768px){
+  .divider-soft{display:none;}
+  .steps-grid{grid-template-columns:1fr;}
+  .offer-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="prescription-card-improved w-100">
+<div class="d-flex flex-column flex-md-row">
+
+<!-- LEFT PANEL -->
+<div class="left-panel">
+  <div class="d-flex">
+    <div class="rx-icon-circle me-3">
+      <i class="bi bi-file-earmark-medical-fill"></i>
+    </div>
+    <div>
+      <h6>Order with Prescription</h6>
+      <p>Upload prescription and we will deliver your medicines</p>
+
+      <button class="btn btn-upload-custom">
+        <i class="bi bi-cloud-upload me-1"></i> Upload Now
+      </button>
+
+      <button class="btn btn-reorder">
+        <i class="bi bi-arrow-repeat me-1"></i> Re Order Previous Medicines
+      </button>
+    </div>
+  </div>
+
+  <!-- Callback -->
+  <div class="callback-fresh d-flex mt-4">
+    <i class="bi bi-telephone-outbound-fill me-3 fs-3" style="color:#6e00ff;"></i>
+    <div>
+      <h6>Don’t have a prescription?</h6>
+      <p>Our health consultant will call you soon</p>
+      <button class="btn btn-outline-purple btn-sm rounded-pill" style="border-color:#6e00ff;color:#6e00ff;">
+        Request Callback
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- DIVIDER -->
+<div class="divider-soft d-none d-md-block"></div>
+
+<!-- RIGHT PANEL -->
+<div class="right-panel ps-md-3">
+
+  <h6 class="mb-2" style="color:#6e00ff;">How does this work?</h6>
+
+  <div class="steps-grid mb-3">
+    <div class="d-flex gap-2"><span class="step-number">1</span> Upload prescription</div>
+    <div class="d-flex gap-2"><span class="step-number">2</span> Add address & place order</div>
+    <div class="d-flex gap-2"><span class="step-number">3</span> We confirm medicines</div>
+    <div class="d-flex gap-2"><span class="step-number">4</span> Delivered at doorstep</div>
+  </div>
+
+  <!-- 🔥 MODERN 3 CARDS -->
+  <div class="offer-grid">
+
+    <div class="offer-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/1087/1087840.png">
+      <div class="offer-big">21%</div>
+      <p>Save up to<br><b>On Genuine Medicines</b></p>
+    </div>
+
+    <div class="offer-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/3523/3523063.png">
+      <div class="offer-big">71%</div>
+      <p>Save up to<br><b>On Substitutes</b></p>
+    </div>
+
+    <div class="offer-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png">
+      <p class="fw-bold text-purple">SMART BUYER</p>
+      <p>Always Prefer Substitute</p>
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+</div>
+
+</body>
+</html>

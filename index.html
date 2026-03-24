@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Slider</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+<style>
+body{
+  font-family: Inter, system-ui, sans-serif;
+  background:#f8f9fb;
+}
+
+.product-section{
+  padding:50px 0;
+}
+
+.product-card{
+  border:1px solid #e8edf3;
+  border-radius:10px;
+  padding:14px;
+  background:#fff;
+  transition:.3s;
+  height:100%;
+}
+
+.product-card:hover{
+  box-shadow:0 8px 24px rgba(0,0,0,.08);
+  transform:translateY(-4px);
+}
+
+.product-card img{
+  height:100px;
+  object-fit:contain;
+  width:100%;
+}
+
+.product-card h6{
+  font-size:13px;
+  min-height:38px;
+}
+
+.product-card p{
+  font-size:12px;
+}
+
+.product-card .btn{
+  background:#6e00ff;
+  border:none;
+  font-size:13px;
+  padding:6px 0;
+}
+
+.product-card .btn:hover{
+  background:#5500cc;
+}
+
+/* arrows */
+.productSwiper .swiper-button-next,
+.productSwiper .swiper-button-prev{
+  width:34px;
+  height:34px;
+  background:#eef3fb;
+  border-radius:6px;
+}
+
+.productSwiper .swiper-button-next::after,
+.productSwiper .swiper-button-prev::after{
+  font-size:12px;
+  color:#111;
+}
+
+/* mobile smaller cards */
+@media(max-width:576px){
+  .product-card{
+    padding:10px;
+  }
+  .product-card img{
+    height:80px;
+  }
+}
+</style>
+</head>
+<body>
+
+<section class="product-section">
+<div class="container">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-semibold">In the spotlight</h4>
+    <a href="#" class="text-primary text-decoration-none">View All ></a>
+  </div>
+
+  <div class="swiper productSwiper">
+    <div class="swiper-wrapper">
+
+      <!-- 6 Products -->
+      <div class="swiper-slide"><div class="product-card">
+        <img src="https://emedshealth.com/images/medicines/moov1.jpeg">
+        <h6 class="fw-bold">
+Moov Pain Relief Ointment for Back Pain, Joint Pain, Knee Pain, Muscle Pain</h6>
+        <p class="text-muted mb-1">By TRIAPDA</p>
+        <p class="text-decoration-line-through text-muted mb-1">MRP ₹140</p>
+        <p class="fw-bold mb-2">₹119 <span class="text-success">15% OFF</span></p>
+        <button class="btn w-100 text-white">Add to Cart</button>
+      </div></div>
+
+      <div class="swiper-slide"><div class="product-card">
+        <img src="https://emedshealth.com/images/medicines/zincovit1.jpeg">
+        <h6 class="fw-bold">Zincovit Multivitamin Syrup 200ml (Green)</h6>
+        <p class="text-muted mb-1">By CIPLA</p>
+        <p class="text-decoration-line-through text-muted mb-1">MRP ₹104</p>
+        <p class="fw-bold mb-2">₹38 <span class="text-success">63% OFF</span></p>
+        <button class="btn w-100 text-white">Add to Cart</button>
+      </div></div>
+
+      <div class="swiper-slide"><div class="product-card">
+        <img src="https://emedshealth.com/images/medicines/manforce1.jpeg">
+        <h6 class="fw-bold">Manforce 1500 Dots Xotic Condom with Flavour Strawberry</h6>
+        <p class="text-muted mb-1">By CIPLA</p>
+        <p class="text-decoration-line-through text-muted mb-1">MRP ₹148</p>
+        <p class="fw-bold mb-2">₹42 <span class="text-success">71% OFF</span></p>
+        <button class="btn w-100 text-white">Add to Cart</button>
+      </div></div>
+
+      <div class="swiper-slide"><div class="product-card">
+        <img src="https://emedshealth.com/images/medicines/shampoo_image1.jpeg">
+        <h6 class="fw-bold">Sugar Free Gold Plus Low Calorie</h6>
+        <p class="text-muted mb-1">By ERIS</p>
+        <p class="text-decoration-line-through text-muted mb-1">MRP ₹234</p>
+        <p class="fw-bold mb-2">₹199 <span class="text-success">15% OFF</span></p>
+        <button class="btn w-100 text-white">Add to Cart</button>
+      </div></div>
+
+      <div class="swiper-slide"><div class="product-card">
+        <img src="https://emedshealth.com/images/medicines/1767415457_medicine.jpg">
+        <h6 class="fw-bold">Ketonol Anti dandruff Shampoo</h6>
+        <p class="text-muted mb-1">By INTAS</p>
+        <p class="text-decoration-line-through text-muted mb-1">MRP ₹183</p>
+        <p class="fw-bold mb-2">₹44 <span class="text-success">75% OFF</span></p>
+        <button class="btn w-100 text-white">Add to Cart</button>
+      </div></div>
+
+      <div class="swiper-slide"><div class="product-card">
+        <img src="https://emedshealth.com/images/medicines/1766560185_medicine.jpg">
+        <h6 class="fw-bold">DALERT 100MG</h6>
+        <p class="text-muted mb-1">By SUN PHARMA</p>
+        <p class="text-decoration-line-through text-muted mb-1">MRP ₹230</p>
+        <p class="fw-bold mb-2">₹196 <span class="text-success">15% OFF</span></p>
+        <button class="btn w-100 text-white">Add to Cart</button>
+      </div></div>
+
+    </div>
+
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+
+  </div>
+
+</div>
+</section>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+new Swiper(".productSwiper", {
+  spaceBetween:15,
+  speed:600,
+  navigation:{
+    nextEl:".swiper-button-next",
+    prevEl:".swiper-button-prev",
+  },
+  breakpoints:{
+    0:{ slidesPerView:2.3 },      // small mobile → 4 visible
+    576:{ slidesPerView:3 },    // bigger mobile → 4
+    768:{ slidesPerView:4 },    // tablet → 4
+    1200:{ slidesPerView:5 }    // desktop → 5
+  }
+});
+</script>
+
+</body>
+</html>

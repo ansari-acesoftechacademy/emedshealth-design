@@ -1,0 +1,2544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emeds · customer reviews · refined</title>
+
+  <!-- Google Font Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+
+  <style>
+    /* ---------- EXISTING PAGE STYLES (unchanged) ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #ffffff;
+    }
+
+    /* main section — subtle background using 6e00ff with very low opacity */
+    .review-section {
+      background: linear-gradient(145deg, #ffffff 0%, #f9f5ff 100%);
+      /* the light tint comes from #6e00ff at 2% */
+    }
+
+    .container {
+      max-width: 1320px;
+    }
+
+    /* title styling with the purple accent */
+    .review-title {
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+      color: #1e1b2b;
+      display: inline-block;
+      position: relative;
+      margin-top: 32px;
+    }
+    .review-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 70px;
+      height: 4px;
+      background: #6e00ff;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(110, 0, 255, 0.3);
+    }
+
+    /* review card — elevated, with purple accent on hover */
+    .review-card {
+      height: 100%;
+      background: #ffffff;
+      border: none;
+      border-radius: 20px;
+      padding: 22px 20px 20px 20px;
+      box-shadow: 0 10px 25px -8px rgba(0, 0, 0, 0.06);
+      transition: all 0.28s ease;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #f0eaff;
+    }
+
+    .review-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 24px 36px -12px rgba(110, 0, 255, 0.18);
+      border-color: #d9c5ff;
+    }
+
+    .review-text {
+      font-size: 0.95rem;
+      color: #2f2b3d;
+      line-height: 1.6;
+      flex: 1;
+      margin-bottom: 12px;
+    }
+
+    /* star rating — keep warm, but we can add a bit of purple note */
+    .stars {
+      color: #ffb347;  /* warm amber */
+      font-size: 1rem;
+      letter-spacing: 2px;
+      margin: 6px 0 10px 0;
+    }
+    /* subtle extra: one star gets purple tint? no, keep clean */
+
+    .review-user {
+      margin-top: 4px;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      border-top: 1px dashed #e4daf5;
+      padding-top: 14px;
+    }
+    .review-user strong {
+      font-weight: 600;
+      color: #1c1729;
+    }
+    .review-user span {
+      font-size: 0.85rem;
+      color: #6f658d;
+      background: #f2ebff;
+      padding: 3px 10px 3px 8px;
+      border-radius: 30px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    /* location dot */
+    .review-user span::before {
+      content: "●";
+      color: #6e00ff;
+      font-size: 10px;
+      margin-right: 4px;
+      opacity: 0.9;
+    }
+    .section-head h5 {
+      position: relative;
+      display: inline-block;   /* so the underline only spans the text width */
+    }
+
+      .section-head h5::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;            /* adjust vertical position if needed */
+        left: 0;
+        width: 70px;              /* same as review title */
+        height: 4px;
+        background: #6e00ff;      /* your brand purple */
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(110, 0, 255, 0.3);
+      }
+
+    /* 6e00ff for arrows – modern square with bg */
+    .reviewSwiper .swiper-button-next,
+    .reviewSwiper .swiper-button-prev {
+      width: 44px;
+      height: 44px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 4px 14px rgba(110, 0, 255, 0.18);
+      transition: 0.2s;
+      border: 1px solid #ede4ff;
+    }
+    .reviewSwiper .swiper-button-next:hover,
+    .reviewSwiper .swiper-button-prev:hover {
+      background: #6e00ff;
+      border-color: #6e00ff;
+      box-shadow: 0 8px 18px rgba(110, 0, 255, 0.35);
+    }
+    .reviewSwiper .swiper-button-next::after,
+    .reviewSwiper .swiper-button-prev::after {
+      font-size: 18px;
+      font-weight: 700;
+      color: #6e00ff;
+      transition: color 0.2s;
+    }
+    .reviewSwiper .swiper-button-next:hover::after,
+    .reviewSwiper .swiper-button-prev:hover::after {
+      color: #ffffff;
+    }
+
+    /* pagination bullets – use 6e00ff for active */
+    .swiper-pagination-bullet {
+      width: 10px;
+      height: 10px;
+      background: #d1c4e9;
+      opacity: 0.7;
+      transition: 0.2s;
+      margin: 0 6px !important;
+    }
+    .swiper-pagination-bullet-active {
+      background: #6e00ff;
+      opacity: 1;
+      width: 24px;
+      border-radius: 20px;
+      box-shadow: 0 0 0 2px rgba(110, 0, 255, 0.2);
+    }
+
+    /* hide navigation on small screens as before, but we keep pagination */
+    @media (max-width: 576px) {
+      .reviewSwiper .swiper-button-next,
+      .reviewSwiper .swiper-button-prev {
+        display: none;
+      }
+      .review-title {
+        font-size: 1.8rem;
+      }
+    }
+
+    /* optional – add a soft purple banner to the section */
+    .review-section {
+      position: relative;
+    }
+    .review-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: radial-gradient(circle at 0% 30%, rgba(110, 0, 255, 0.03) 0%, transparent 50%);
+    }
+    .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* extra spacing and vividness */
+    .swiper {
+      padding: 8px 2px 40px 2px !important;
+    }
+
+/* section with gentle purple tint – now with testi suffix */
+    .blog-sectiontesti {
+      padding: 48px 0 0px 0;
+      background: radial-gradient(circle at 100% 20%, rgba(110,0,255,0.02) 0%, transparent 50%);
+      position: relative;
+    }
+
+    .container {
+      max-width: 1320px;
+    }
+
+    /* --- title with 6e00ff accent --- */
+    .blog-titletesti {
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+      color: #1e1b2b;
+      display: inline-block;
+      position: relative;
+    }
+    .blog-titletesti::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 80px;
+      height: 5px;
+      background: #6e00ff;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(110,0,255,0.4);
+    }
+
+    /* --- blog card: clean, elevated – testi version --- */
+    .blog-cardtesti {
+      background: #ffffff;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #f0eaff;
+    }
+
+    .blog-cardtesti:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 40px -12px rgba(110, 0, 255, 0.25);
+      border-color: #d4c2ff;
+    }
+
+    /* image with hover zoom */
+    .blog-imgtesti {
+      height: 180px;
+      overflow: hidden;
+      background-color: #eae1f5;
+    }
+    .blog-imgtesti img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .blog-cardtesti:hover .blog-imgtesti img {
+      transform: scale(1.05);
+    }
+
+    /* content area */
+    .blog-contenttesti {
+      padding: 18px 16px 20px 16px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .blog-contenttesti h6 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1.4;
+      color: #1a1625;
+      margin: 0 0 10px 0;
+    }
+
+    .blog-contenttesti p {
+      font-size: 0.85rem;
+      font-weight: 400;
+      line-height: 1.6;
+      color: #3d3852;
+      margin: 0 0 12px 0;
+      text-align: left;
+      flex: 1;
+    }
+
+    /* read more link – #6e00ff, now testi */
+    .read-linktesti {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #6e00ff;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.2s;
+      margin-top: 4px;
+      border-bottom: 1px solid transparent;
+    }
+    .read-linktesti:hover {
+      color: #4a00b3;
+      gap: 8px;
+      border-bottom-color: #6e00ff;
+    }
+    .read-linktesti::after {
+      content: "→";
+      font-size: 1.1rem;
+      transition: transform 0.2s;
+    }
+    .read-linktesti:hover::after {
+      transform: translateX(4px);
+    }
+
+    /* --- swiper arrows with purple theme — keeping original swiper class names (not changed) --- */
+    .swiper-button-next,
+    .swiper-button-prev {
+      width: 44px;
+      height: 44px;
+      background: #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 6px 18px rgba(110, 0, 255, 0.15);
+      transition: 0.2s;
+      border: 1px solid #e5d9ff;
+    }
+    .swiper-button-next:hover,
+    .swiper-button-prev:hover {
+      background: #6e00ff;
+      border-color: #6e00ff;
+      box-shadow: 0 10px 22px rgba(110, 0, 255, 0.35);
+    }
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+      font-size: 18px;
+      font-weight: 700;
+      color: #6e00ff;
+      transition: color 0.2s;
+    }
+    .swiper-button-next:hover::after,
+    .swiper-button-prev:hover::after {
+      color: #ffffff;
+    }
+
+    /* pagination – purple bullets (swiper classes untouched) */
+    .swiper-pagination {
+      position: relative;
+      margin-top: 30px;
+    }
+    .swiper-pagination-bullet {
+      width: 10px;
+      height: 10px;
+      background: #cec2e6;
+      opacity: 0.7;
+      transition: 0.2s;
+      margin: 0 6px !important;
+    }
+    .swiper-pagination-bullet-active {
+      background: #6e00ff;
+      opacity: 1;
+      width: 24px;
+      border-radius: 20px;
+      box-shadow: 0 0 0 2px rgba(110, 0, 255, 0.15);
+    }
+
+    /* hide arrows on small screens */
+    @media (max-width: 576px) {
+      .swiper-button-next,
+      .swiper-button-prev {
+        display: none;
+      }
+      .blog-titletesti {
+        font-size: 1.9rem;
+      }
+      .blog-imgtesti {
+        height: 160px;
+      }
+    }
+
+    body{
+  background:#fff;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+/* heading row */
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+}
+
+/* Title underline */
+.section-title{
+  position:relative;
+  display:inline-block;
+}
+
+.section-title h5{
+  font-weight:600;
+  font-size:18px;
+  margin:0;
+}
+
+/* purple line */
+.section-title::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-6px;
+  width:50px;
+  height:3px;
+  background:#6e00ff;
+  border-radius:10px;
+}
+
+/* See all link */
+.section-head, .see-all a{
+  font-size:14px;
+  text-decoration:none;
+  color:#6e00ff;
+  font-weight:500;
+}
+
+/* CATEGORY CARD */
+.cat-card{
+  height:155px;
+  border-radius:12px;
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:#fff;
+  position:relative;
+  transition:.25s;
+}
+
+/* pastel bg colors */
+.bg1{background:#f4e9ff;}
+.bg2{background:#ffe9f4;}
+.bg3{background:#e9fff2;}
+.bg4{background:#e9efff;}
+.bg5{background:#fff6e0;}
+.bg6{background:#f2e9ff;}
+.bg7{background:#e9f9ff;}
+
+/* image */
+.cat-card img{
+  width:90%;
+  max-height:90px;
+  object-fit:contain;
+  margin-bottom:6px;
+  transform:translateY(-5px);
+}
+
+/* title */
+.cat-card p{
+  font-size:13px;
+  font-weight:600;
+  margin:0;
+}
+
+/* hover */
+.cat-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 10px 22px rgba(110,0,255,.25);
+}
+
+/* swiper arrows */
+.categorySwiper .swiper-button-next,
+.categorySwiper .swiper-button-prev{
+  width:34px;
+  height:34px;
+  background:#6e00ff;
+  border-radius:50%;
+  box-shadow:0 3px 10px rgba(0,0,0,.2);
+}
+
+.categorySwiper .swiper-button-next::after,
+.categorySwiper .swiper-button-prev::after{
+  font-size:14px;
+  color:#fff;
+}
+
+/* hide arrows on mobile */
+@media(max-width:576px){
+  .categorySwiper .swiper-button-next,
+  .categorySwiper .swiper-button-prev{
+    display:none;
+  }
+}
+
+    body{
+  background:#ffffff;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.brand-section{
+  padding:30px 0;
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+.section-head h5{
+  font-weight:600;
+  margin:0;
+}
+
+.section-head a{
+  font-size:14px;
+  color:#6e00ff;                /* link color updated */
+  text-decoration:none;
+  font-weight:500;
+}
+
+/* brand card */
+.brand-card{
+  height:110px;
+  border-radius:10px;
+  border:1px solid #eef1f5;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#fff;
+  transition:.25s;
+}
+
+.brand-card:hover{
+  box-shadow:0 6px 20px rgba(0,0,0,.08);
+}
+
+.brand-card img{
+  max-width:80%;
+  max-height:60px;
+  object-fit:contain;
+}
+
+/* arrows - new background & icon color */
+.brandSwiper .swiper-button-next,
+.brandSwiper .swiper-button-prev{
+  width:38px;
+  height:38px;
+  background:#6e00ff;           /* changed to #6e00ff */
+  border-radius:50%;
+  box-shadow:0 4px 14px rgba(0,0,0,.15);
+}
+
+.brandSwiper .swiper-button-next::after,
+.brandSwiper .swiper-button-prev::after{
+  font-size:14px;
+  color:#fff;                   /* white arrow */
+}
+
+/* hide arrows on mobile */
+@media(max-width:576px){
+  .brandSwiper .swiper-button-next,
+  .brandSwiper .swiper-button-prev{
+    display:none;
+  }
+}
+
+body{
+  font-family: Inter, system-ui, sans-serif;
+  background:#f8f9fb;
+}
+
+
+
+.product-card{
+  border:1px solid #e8edf3;
+  border-radius:10px;
+  padding:14px;
+  background:#fff;
+  transition:.3s;
+  height:100%;
+}
+
+.product-card:hover{
+  box-shadow:0 8px 24px rgba(0,0,0,.08);
+  transform:translateY(-4px);
+}
+
+.product-card img{
+  height:100px;
+  object-fit:contain;
+  width:100%;
+}
+
+.product-card h6{
+  font-size:13px;
+  min-height:38px;
+}
+
+.product-card p{
+  font-size:12px;
+}
+
+.product-card .btn{
+  background:#6e00ff;
+  border:none;
+  font-size:13px;
+  padding:6px 0;
+}
+
+.product-card .btn:hover{
+  background:#5500cc;
+}
+
+/* arrows */
+.productSwiper .swiper-button-next,
+.productSwiper .swiper-button-prev{
+  width:34px;
+  height:34px;
+  background:#eef3fb;
+  border-radius:6px;
+}
+
+.productSwiper .swiper-button-next::after,
+.productSwiper .swiper-button-prev::after{
+  font-size:12px;
+  color:#111;
+}
+
+.product-section h4.fw-semibold {
+  position: relative;
+  display: inline-block;
+  font-size: 1.2rem;
+}
+.product-section h4.fw-semibold::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 70px;
+  height: 4px;
+  background: #6e00ff;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(110,0,255,0.3);
+}
+
+/* mobile smaller cards */
+@media(max-width:576px){
+  .product-card{
+    padding:10px;
+  }
+  .product-card img{
+    height:80px;
+  }
+}
+
+/* MAIN BANNER */
+.hero-banner{
+  background:linear-gradient(135deg,#5c00d6,#6e00ff,#9a00ff);
+  border-radius:22px;
+  padding:15px 50px;
+  color:white;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 20px 40px rgba(110,0,255,.45);
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:40px;
+}
+
+/* Glow circles */
+.hero-banner::before{
+  content:"";
+  position:absolute;
+  right:-100px;
+  top:-100px;
+  width:300px;
+  height:300px;
+  background:radial-gradient(circle,rgba(255,255,255,.15),transparent 70%);
+}
+.hero-banner::after{
+  content:"";
+  position:absolute;
+  left:-120px;
+  bottom:-120px;
+  width:320px;
+  height:320px;
+  background:radial-gradient(circle,rgba(255,255,255,.12),transparent 70%);
+}
+
+/* LEFT CONTENT */
+.hero-content{
+  max-width:60%;
+  z-index:2;
+}
+
+/* Badge */
+.hero-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:rgba(255,255,255,.15);
+  padding:6px 14px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:600;
+}
+
+/* Title */
+.hero-title{
+  font-size:30px;
+  font-weight:700;
+  margin:18px 0 10px;
+  max-width:600px;
+}
+
+/* Subtitle */
+.hero-sub{
+  font-size:15px;
+  font-weight:500;
+  opacity:.9;
+  margin-bottom:30px;
+}
+
+/* Features */
+.hero-features{
+  display:flex;
+  gap:30px;
+  flex-wrap:wrap;
+  font-size:14px;
+  font-weight:500;
+}
+.feature-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(255,255,255,.12);
+  padding:10px 14px;
+  border-radius:14px;
+}
+.feature-item i{
+  font-size:18px;
+  opacity:.9;
+}
+
+/* RIGHT IMAGE */
+.hero-image{
+  max-width:40%;
+  z-index:2;
+}
+.hero-image img{
+  width:100%;
+  max-height:320px;
+  object-fit:contain;
+  filter:drop-shadow(0 15px 30px rgba(0,0,0,.25));
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  body{padding:15px;}
+  .hero-banner{
+    flex-direction:column;
+    text-align:center;
+    padding:30px 25px;
+  }
+  .hero-content,
+  .hero-image{
+    max-width:100%;
+  }
+  .hero-title{font-size:22px;}
+  .hero-features{gap:12px; justify-content:center;}
+  .hero-image img{
+    max-height:240px;
+    margin-top:20px;
+  }
+}
+    /* ---------- NEW PRESCRIPTION CARD STYLES (added without body rule) ---------- */
+    .prescription-card-improved{
+      margin: 1rem auto 2rem auto;  /* top margin for spacing, centered */
+      background:#fff;
+      border-radius:28px;
+      box-shadow:0 20px 35px -8px rgba(110,0,255,.15);
+      padding:1.6rem 1.8rem;
+      max-width:1300px;
+    }
+
+    .left-panel,.right-panel{
+      flex:1;
+      font-size:13px;
+    }
+
+    .rx-icon-circle{
+      width:52px;
+      height:52px;
+      background:#efe6ff;
+      border-radius:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:26px;
+      color:#6e00ff;
+    }
+
+    .btn-upload-custom{
+      background:#6e00ff;
+      color:white;
+      font-size:13px;
+      font-weight:600;
+      padding:.55rem 1.4rem;
+      border-radius:50px;
+      border:none;
+      box-shadow:0 6px 18px rgba(110,0,255,.35);
+      transition:.2s;
+      width: 100%;
+    }
+    .btn-upload-custom:hover{
+      background:#5a00d6;
+      transform:translateY(-1px);
+    }
+
+    .btn-reorder{
+      background:linear-gradient(135deg,#6e00ff,#9a00ff);
+      color:#fff;
+      font-size:13px;
+      font-weight:600;
+      padding:.6rem 1.4rem;
+      border-radius:50px;
+      border:none;
+      margin-top:10px;
+      width:100%;
+      box-shadow:0 8px 20px rgba(110,0,255,.45);
+      transition:.2s;
+    }
+    .btn-reorder:hover{
+      transform:translateY(-2px);
+      box-shadow:0 12px 28px rgba(110,0,255,.55);
+    }
+
+    .callback-fresh{
+      background:#f6f0ff;
+      border-radius:18px;
+      padding:1rem;
+      margin-top:1.4rem;
+      border:1px solid rgba(110,0,255,.18);
+    }
+    .callback-fresh h6{
+      color:#4b00b5;
+    }
+
+    .divider-soft{
+      width:1px;
+      background:linear-gradient(to bottom,transparent,#d9c9ff,transparent);
+      margin:0 1.5rem;
+    }
+
+    .steps-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:1rem;
+    }
+    .step-number{
+      width:28px;
+      height:28px;
+      background:#efe6ff;
+      color:#6e00ff;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      font-size:12px;
+    }
+
+    @media(max-width:768px){
+      .divider-soft{display:none;}
+      .steps-grid{grid-template-columns:1fr;}
+    }
+
+    /* SECTION BG */
+.faq-section{
+  background: linear-gradient(135deg,#f4f1ff,#ece6ff);
+  padding:25px 0;
+  position:relative;
+  overflow:hidden;
+}
+
+/* medicine background image */
+.faq-section::before{
+  content:"";
+  position:absolute;
+  right:0;
+  bottom:0;
+  width:420px;
+  height:420px;
+  background:url('https://images.unsplash.com/photo-1587854692152-cbe660dbde88') no-repeat center/contain;
+  opacity:.12;
+}
+
+/* FAQ BOX */
+.faq-box{
+  max-width:1300px;
+  margin:auto;
+  background:#fff;
+  border-radius:22px;
+  padding:30px 35px;
+  box-shadow:0 15px 35px rgba(110,0,255,.15);
+}
+
+/* TITLE */
+.faq-title{
+  font-size:22px;
+  font-weight:700;
+  color:#6e00ff;
+  margin-bottom:25px;
+}
+
+/* ACCORDION */
+.accordion-button{
+  font-size:15px;
+  font-weight:500;
+  color:#222;
+  padding:16px 10px;
+  border-radius:12px !important;
+}
+
+.accordion-button:not(.collapsed){
+  background:#f4eaff;
+  color:#6e00ff;
+  box-shadow:none;
+}
+
+.accordion-item{
+  border:none;
+  border-bottom:1px solid #eee;
+}
+
+.accordion-body{
+  font-size:14px;
+  color:#555;
+  line-height:1.6;
+}
+
+/* ICON COLOR */
+.accordion-button::after{
+  filter: hue-rotate(260deg);
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .faq-section::before{
+    width:200px;
+    height:200px;
+  }
+}
+
+@keyframes gradientShift {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.offer-section {
+  padding: 60px 20px;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+/* Card styles */
+.offer-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 30px;
+  padding: 0 0 28px 0;
+  height: 78%;
+  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Card image container */
+.card-img-container {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 30px 30px 30% 30%;
+}
+
+.card-img-container::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to top, rgba(255,255,255,0.95), transparent);
+  z-index: 1;
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.offer-card:hover .card-img {
+  transform: scale(1.15) rotate(2deg);
+}
+
+/* Floating badge on image */
+.img-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(5px);
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #059669;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.5);
+  z-index: 2;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Card content */
+.card-content {
+  padding: 20px 24px 0;
+  position: relative;
+  z-index: 2;
+  bottom: 110px;
+}
+
+.icon-wrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 15px;
+  transition: all 0.4s ease;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  border: 2px solid rgba(255,255,255,0.5);
+}
+
+.offer-card:hover .icon-wrap {
+  transform: scale(1.1) rotate(360deg);
+}
+
+.offer-title {
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.offer-percent {
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1;
+  margin: 5px 0;
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+  position: relative;
+}
+
+.offer-percent::after {
+  content: 'OFF';
+  font-size: 18px;
+  font-weight: 600;
+  color: #6b7280;
+  position: absolute;
+  top: 15px;
+  right: -40px;
+  background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+  padding: 3px 8px;
+  border-radius: 20px;
+  -webkit-text-fill-color: #475569;
+}
+
+.offer-desc {
+  font-size: 16px;
+  color: #4b5563;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+.badge-soft {
+  display: inline-block;
+  padding: 8px 20px;
+  font-size: 13px;
+  border-radius: 50px;
+  margin-top: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* Card specific gradients */
+.green .icon-wrap {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  box-shadow: 0 15px 25px rgba(16, 185, 129, 0.3);
+}
+.green .offer-percent {
+  background: linear-gradient(135deg, #059669, #10b981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.green .badge-soft {
+  background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+  color: #065f46;
+  border: 1px solid #10b981;
+}
+
+.purple .icon-wrap {
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+  color: white;
+  box-shadow: 0 15px 25px rgba(139, 92, 246, 0.3);
+}
+.purple .offer-percent {
+  background: linear-gradient(135deg, #6d28d9, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.purple .badge-soft {
+  background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+  color: #5b21b6;
+  border: 1px solid #8b5cf6;
+}
+
+.blue .icon-wrap {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  box-shadow: 0 15px 25px rgba(59, 130, 246, 0.3);
+}
+.blue .badge-soft {
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+  color: #1e40af;
+  border: 1px solid #3b82f6;
+}
+
+.blue ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+.blue ul li {
+  font-size: 14px;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 0px;
+  background: rgba(59, 130, 246, 0.05);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.blue ul li:hover {
+  background: rgba(59, 130, 246, 0.1);
+  transform: translateX(5px);
+}
+
+.blue ul li::before {
+  content: '✓';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.btn-soft {
+  margin-top: 20px;
+  font-size: 14px;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.4s ease;
+  border: none;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-soft::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-soft:hover::before {
+  left: 100%;
+}
+
+.btn-soft:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4);
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+/* Rating stars */
+.rating {
+  color: #fbbf24;
+  font-size: 12px;
+  margin-top: 10px;
+  letter-spacing: 2px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card-img-container {
+    height: 160px;
+  }
+  
+  .offer-percent {
+    font-size: 42px;
+  }
+  
+  .offer-percent::after {
+    font-size: 14px;
+    top: 10px;
+    right: -35px;
+  }
+  
+  .icon-wrap {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+}
+
+.healthcare-slider-container {
+    width: 100%;
+    padding: 12px 20px;
+    background: #fff;
+}
+.swiper {
+    width: 100%;
+    border-radius: 20px;
+}
+.swiper-slide {
+    border-radius: 20px;
+    background-size: cover;
+    background-position: center;
+}
+.slide-bg-1 { background-image: linear-gradient(135deg,rgba(124,58,237,.9),rgba(79,70,229,.9)); }
+.slide-bg-2 { background-image: linear-gradient(135deg,rgba(147,51,234,.9),rgba(99,102,241,.9)); }
+.slide-bg-3 { background-image: linear-gradient(135deg,rgba(59,130,246,.9),rgba(29,78,216,.9)); }
+
+.slide-content{
+    display:flex;
+    align-items:center;
+    height:100%;
+    padding:40px;
+    color:#fff;
+}
+
+.text-section{ flex:1; }
+.text-section h2{
+    font-size:1.8rem;
+    font-weight:800;
+    margin-bottom:12px;
+}
+.text-section p{
+    font-size:0.9rem;
+    margin-bottom:20px;
+    line-height:1.4;
+}
+
+.illustration-section{
+    flex:1;
+    text-align:center;
+}
+.illustration-section img{
+    max-height:140px;
+    filter:drop-shadow(0 10px 20px rgba(0,0,0,.25));
+}
+
+.cta-button{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:12px 24px;
+    border-radius:50px;
+    font-size:.9rem;
+    font-weight:700;
+    text-decoration:none;
+    color:#fff;
+}
+.btn-green{background:linear-gradient(135deg,#10b981,#059669);}
+.btn-orange{background:linear-gradient(135deg,#f59e0b,#d97706);}
+.btn-blue{background:linear-gradient(135deg,#3b82f6,#1d4ed8);}
+
+.swiper-button-next,
+.swiper-button-prev{
+    width:40px;
+    height:40px;
+    background:rgba(255,255,255,.2);
+    border-radius:50%;
+    color:#fff;
+}
+.swiper-button-next:after,
+.swiper-button-prev:after{
+    font-size:16px;
+    font-weight:700;
+}
+
+@media(max-width:768px){
+    .swiper-slide{min-height:220px;}
+    .slide-content{
+        flex-direction:column;
+        text-align:center;
+        padding:20px;
+    }
+    .text-section h2{font-size:1.1rem;}
+    .text-section p{font-size:.7rem;}
+    .illustration-section img{max-height:70px;}
+    .cta-button{padding:6px 14px;font-size:.65rem;}
+}
+
+/* Floating animation for cards */
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.offer-card {
+  animation: floatCard 6s ease-in-out infinite;
+}
+
+.offer-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.offer-card:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* Shine effect on hover */
+.offer-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.offer-card:hover::after {
+  opacity: 1;
+}   
+
+  </style>
+</head>
+<body>
+  <div class="healthcare-slider-container">
+    <div class="swiper bannerSwiper">
+
+      <div class="swiper-wrapper">
+
+                <!-- SLIDE 1 (Image Left) -->
+                <div class="swiper-slide slide-bg-1">
+                  <div class="slide-content">
+                      <div class="illustration-section">
+                          <img src="https://cdn-icons-png.flaticon.com/512/3067/3067256.png">
+                      </div>
+                      <div class="text-section">
+                          <h2>Complete Online Pharmacy Store</h2>
+                          <p>Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.</p>
+                          <a href="#" class="cta-button btn-green">
+                              <i class="fa-solid fa-pills"></i> Learn More
+                          </a>
+                      </div>
+                  </div>
+                </div>
+
+                <!-- SLIDE 2 (Image Right) -->
+                <div class="swiper-slide slide-bg-2">
+                  <div class="slide-content">
+                    <div class="text-section">
+                        <h2>Your Trusted Pharmacy Partner</h2>
+                        <p>Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.</p>
+                        <a href="#" class="cta-button btn-orange">
+                            <i class="fa-solid fa-stethoscope"></i> Explore
+                        </a>
+                    </div>
+                    <div class="illustration-section">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3022/3022825.png">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- SLIDE 3 (Image Left) -->
+                <div class="swiper-slide slide-bg-3">
+                  <div class="slide-content">
+                      <div class="illustration-section">
+                          <img src="https://cdn-icons-png.flaticon.com/512/2785/2785433.png">
+                      </div>
+                      <div class="text-section">
+                          <h2>Save More With Substitutes</h2>
+                          <p>Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.Order genuine medicines and healthcare essentials with safe delivery.</p>
+                          <a href="#" class="cta-button btn-blue">
+                              <i class="fa-solid fa-heart-pulse"></i> View Benefits
+                          </a>
+                      </div>
+                  </div>
+                </div>
+
+      </div>
+
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+
+  </div>
+</div>
+
+
+  <!-- ========== NEW PRESCRIPTION CARD (placed at top) ========== -->
+  <div class="prescription-card-improved w-100">
+    <div class="d-flex flex-column flex-md-row">
+
+      <!-- LEFT PANEL -->
+      <div class="left-panel">
+        <div class="d-flex">
+          <div class="rx-icon-circle me-3">
+            <i class="bi bi-file-earmark-medical-fill"></i>
+          </div>
+          <div>
+            <h6>Order with Prescription</h6>
+            <p>Upload prescription and we will deliver your medicines</p>
+
+            <button class="btn btn-upload-custom">
+              <i class="bi bi-cloud-upload me-1"></i> Upload Now
+            </button>
+
+            <button class="btn btn-reorder">
+              <i class="bi bi-arrow-repeat me-1"></i> Re Order Previous Medicines
+            </button>
+          </div>
+        </div>
+
+        <!-- Callback -->
+        <div class="callback-fresh d-flex mt-4">
+          <i class="bi bi-telephone-outbound-fill me-3 fs-3" style="color:#6e00ff;"></i>
+          <div>
+            <h6>Don’t have a prescription?</h6>
+            <p>Our health consultant will call you soon</p>
+            <button class="btn btn-outline-purple btn-sm rounded-pill" style="border-color:#6e00ff;color:#6e00ff;">
+              Request Callback
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIVIDER -->
+      <div class="divider-soft d-none d-md-block"></div>
+
+      <!-- RIGHT PANEL -->
+      <div class="right-panel ps-md-3">
+        <h6 class="mb-3" style="color:#6e00ff;">How does this work?</h6>
+
+        <div class="steps-grid">
+          <div class="d-flex gap-2">
+            <span class="step-number">1</span> Upload prescription
+          </div>
+          <div class="d-flex gap-2">
+            <span class="step-number">2</span> Add address & place order
+          </div>
+          <div class="d-flex gap-2">
+            <span class="step-number">3</span> We confirm medicines
+          </div>
+          <div class="d-flex gap-2">
+            <span class="step-number">4</span> Delivered at doorstep
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <section class="offer-section">
+  <div class="container">
+    <div class="row g-4 justify-content-center">
+      
+      <!-- Card 1 - Medicine Offer -->
+      <div class="col-lg-4 col-md-6">
+        <div class="offer-card green">
+          <div class="card-img-container">
+            <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=2030&auto=format&fit=crop" 
+                 alt="Medicine" class="card-img">
+            <span class="img-badge">
+              <i class="bi bi-shield-check me-1"></i>Bestseller
+            </span>
+          </div>
+          <div class="card-content text-center">
+            <div class="icon-wrap mx-auto">
+              <i class="bi bi-heart-pulse-fill"></i>
+            </div>
+            <div class="offer-title">SAVE Upto</div>
+            <div class="offer-percent">21%</div>
+            <div class="offer-desc">On Prescription Medicines</div>
+            <span class="badge-soft">
+              <i class="bi bi-patch-check-fill me-1"></i>Verified Quality
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Card 2 - Substitutes Offer -->
+      <div class="col-lg-4 col-md-6">
+        <div class="offer-card purple">
+          <div class="card-img-container">
+            <img src="https://images.unsplash.com/photo-1471864190281-a93a3070b6de?q=80&w=2070&auto=format&fit=crop" 
+                 alt="Medicine Bottles" class="card-img">
+            <span class="img-badge">
+              <i class="bi bi-star-fill me-1"></i>Top Rated
+            </span>
+          </div>
+          <div class="card-content text-center">
+            <div class="icon-wrap mx-auto">
+              <i class="bi bi-cash-stack"></i>
+            </div>
+            <div class="offer-title">SAVE upto</div>
+            <div class="offer-percent">71%</div>
+            <div class="offer-desc">On Generic Substitutes</div>
+            <span class="badge-soft">
+              <i class="bi bi-star-fill me-1"></i>Best Value
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Card 3 - Smart Buyer Features -->
+      <div class="col-lg-4 col-md-6">
+        <div class="offer-card blue">
+          <div class="card-img-container">
+            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2070&auto=format&fit=crop" 
+                 alt="Medical Professional" class="card-img">
+            <span class="img-badge">
+              <i class="bi bi-person-check me-1"></i>Premium
+            </span>
+          </div>
+          <div class="card-content">
+            <div class="icon-wrap">
+              <i class="bi bi-person-vcard"></i>
+            </div>
+            <div class="offer-title">Smart Buyer</div>
+            <div class="offer-desc fw-bold">Always Prefer Substitute
+</div>
+            
+            <button class="btn-soft">
+              <i class="bi bi-info-circle me-2"></i>Know More
+            </button>
+            
+            <ul>
+              <li>FDA & GMP Certified Products</li>
+              <li>Same Active Composition</li>
+              <li>Save Up to 71% Cost</li>
+            </ul>
+            
+            <div class="text-center mt-3">
+              <small class="text-primary fw-bold">
+                <i class="bi bi-people-fill me-1"></i>Trusted by 50k+ customers
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+  <!-- ========== ORIGINAL SECTIONS (exactly as before) ========== -->
+
+  <section class="product-section">
+<div class="container">
+
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h4 class="fw-semibold">Shop By Popular Product</h4>
+    <a href="#" class="text-primary see-all text-decoration-none">See All ></a>
+  </div>
+
+  
+
+  <div class="swiper productSwiper">
+    <div class="swiper-wrapper">
+
+      <!-- 6 Products -->
+      <div class="swiper-slide"><div class="product-card">
+        <img src="https://emedshealth.com/images/medicines/moov1.jpeg">
+        <h6 class="fw-bold">
+Moov Pain Relief Ointment for Back Pain, Joint Pain, Knee Pain, Muscle Pain</h6>
+        <p class="text-muted mb-1">By TRIAPDA</p>
+        <p class="text-decoration-line-through text-muted mb-1">MRP ₹140</p>
+        <p class="fw-bold mb-2">₹119 <span class="text-success">15% OFF</span></p>
+        <button class="btn w-100 text-white">Add to Cart</button>
+      </div></div>
+
+      <div class="swiper-slide"><div class="product-card">
+        <img src="https://emedshealth.com/images/medicines/zincovit1.jpeg">
+        <h6 class="fw-bold">Zincovit Multivitamin Syrup 200ml (Green)</h6>
+        <p class="text-muted mb-1">By CIPLA</p>
+        <p class="text-decoration-line-through text-muted mb-1">MRP ₹104</p>
+        <p class="fw-bold mb-2">₹38 <span class="text-success">63% OFF</span></p>
+        <button class="btn w-100 text-white">Add to Cart</button>
+      </div></div>
+
+      <div class="swiper-slide"><div class="product-card">
+        <img src="https://emedshealth.com/images/medicines/manforce1.jpeg">
+        <h6 class="fw-bold">Manforce 1500 Dots Xotic Condom with Flavour Strawberry</h6>
+        <p class="text-muted mb-1">By CIPLA</p>
+        <p class="text-decoration-line-through text-muted mb-1">MRP ₹148</p>
+        <p class="fw-bold mb-2">₹42 <span class="text-success">71% OFF</span></p>
+        <button class="btn w-100 text-white">Add to Cart</button>
+      </div></div>
+
+      <div class="swiper-slide"><div class="product-card">
+        <img src="https://emedshealth.com/images/medicines/shampoo_image1.jpeg">
+        <h6 class="fw-bold">Sugar Free Gold Plus Low Calorie</h6>
+        <p class="text-muted mb-1">By ERIS</p>
+        <p class="text-decoration-line-through text-muted mb-1">MRP ₹234</p>
+        <p class="fw-bold mb-2">₹199 <span class="text-success">15% OFF</span></p>
+        <button class="btn w-100 text-white">Add to Cart</button>
+      </div></div>
+
+      <div class="swiper-slide"><div class="product-card">
+        <img src="https://emedshealth.com/images/medicines/1767415457_medicine.jpg">
+        <h6 class="fw-bold">Ketonol Anti dandruff Shampoo</h6>
+        <p class="text-muted mb-1">By INTAS</p>
+        <p class="text-decoration-line-through text-muted mb-1">MRP ₹183</p>
+        <p class="fw-bold mb-2">₹44 <span class="text-success">75% OFF</span></p>
+        <button class="btn w-100 text-white">Add to Cart</button>
+      </div></div>
+
+      <div class="swiper-slide"><div class="product-card">
+        <img src="https://emedshealth.com/images/medicines/1766560185_medicine.jpg">
+        <h6 class="fw-bold">DALERT 100MG</h6>
+        <p class="text-muted mb-1">By SUN PHARMA</p>
+        <p class="text-decoration-line-through text-muted mb-1">MRP ₹230</p>
+        <p class="fw-bold mb-2">₹196 <span class="text-success">15% OFF</span></p>
+        <button class="btn w-100 text-white">Add to Cart</button>
+      </div></div>
+
+    </div>
+
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+
+  </div>
+
+</div>
+</section>
+
+  <section class="category-section">
+<div class="container">
+
+<!-- Heading -->
+<div class="section-head">
+  <div class="section-title">
+    <h5>Shop by Popular Categories</h5>
+  </div>
+  <a href="#">See all ›</a>
+</div>
+
+<!-- Slider -->
+<div class="swiper categorySwiper">
+<div class="swiper-wrapper">
+
+<div class="swiper-slide">
+  <div class="cat-card bg1">
+    <img src="https://onemg.gumlet.io/diagnostics%2F2023-11%2F1699443681_sexuall.webp?format=auto">
+    <p>Vitamins & Supplements</p>
+  </div>
+</div>
+
+<div class="swiper-slide">
+  <div class="cat-card bg2">
+    <img src="https://onemg.gumlet.io/diagnostics%2F2023-11%2F1699443681_sexuall.webp?format=auto">
+    <p>Nutritional Drinks</p>
+  </div>
+</div>
+
+<div class="swiper-slide">
+  <div class="cat-card bg3">
+    <img src="https://onemg.gumlet.io/diagnostics%2F2023-11%2F1699443681_sexuall.webp?format=auto">
+    <p>Skin Care</p>
+  </div>
+</div>
+
+<div class="swiper-slide">
+  <div class="cat-card bg4">
+    <img src="https://onemg.gumlet.io/diagnostics%2F2023-11%2F1699443681_sexuall.webp?format=auto">
+    <p>Hair Care</p>
+  </div>
+</div>
+
+<div class="swiper-slide">
+  <div class="cat-card bg4">
+    <img src="https://onemg.gumlet.io/diagnostics%2F2023-11%2F1699443681_sexuall.webp?format=auto">
+    <p>Hair Care</p>
+  </div>
+</div>
+
+<div class="swiper-slide">
+  <div class="cat-card bg4">
+    <img src="https://onemg.gumlet.io/diagnostics%2F2023-11%2F1699443681_sexuall.webp?format=auto">
+    <p>Hair Care</p>
+  </div>
+</div>
+
+<div class="swiper-slide">
+  <div class="cat-card bg5">
+    <img src="https://onemg.gumlet.io/diagnostics%2F2023-11%2F1699443681_sexuall.webp?format=auto">
+    <p>Sexual Wellness</p>
+  </div>
+</div>
+
+<div class="swiper-slide">
+  <div class="cat-card bg6">
+    <img src="https://onemg.gumlet.io/diagnostics%2F2023-11%2F1699443681_sexuall.webp?format=auto">
+    <p>Ayurveda Products</p>
+  </div>
+</div>
+
+<div class="swiper-slide">
+  <div class="cat-card bg7">
+    <img src="https://onemg.gumlet.io/diagnostics%2F2023-11%2F1699443681_sexuall.webp?format=auto">
+    <p>Pain Relief</p>
+  </div>
+</div>
+
+</div>
+
+<div class="swiper-button-next"></div>
+<div class="swiper-button-prev"></div>
+
+</div>
+</div>
+</section>
+
+
+  <section class="product-section">
+<div class="container">
+
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h4 class="fw-semibold">Shop By Featured Product</h4>
+    <a href="#" class="text-primary text-decoration-none">See All ></a>
+  </div>
+
+  <div class="swiper productSwiper">
+    <div class="swiper-wrapper">
+
+      <!-- 6 Products -->
+      <div class="swiper-slide"><div class="product-card">
+        <img src="https://emedshealth.com/images/medicines/moov1.jpeg">
+        <h6 class="fw-bold">
+Moov Pain Relief Ointment for Back Pain, Joint Pain, Knee Pain, Muscle Pain</h6>
+        <p class="text-muted mb-1">By TRIAPDA</p>
+        <p class="text-decoration-line-through text-muted mb-1">MRP ₹140</p>
+        <p class="fw-bold mb-2">₹119 <span class="text-success">15% OFF</span></p>
+        <button class="btn w-100 text-white">Add to Cart</button>
+      </div></div>
+
+      <div class="swiper-slide"><div class="product-card">
+        <img src="https://emedshealth.com/images/medicines/zincovit1.jpeg">
+        <h6 class="fw-bold">Zincovit Multivitamin Syrup 200ml (Green)</h6>
+        <p class="text-muted mb-1">By CIPLA</p>
+        <p class="text-decoration-line-through text-muted mb-1">MRP ₹104</p>
+        <p class="fw-bold mb-2">₹38 <span class="text-success">63% OFF</span></p>
+        <button class="btn w-100 text-white">Add to Cart</button>
+      </div></div>
+
+      <div class="swiper-slide"><div class="product-card">
+        <img src="https://emedshealth.com/images/medicines/manforce1.jpeg">
+        <h6 class="fw-bold">Manforce 1500 Dots Xotic Condom with Flavour Strawberry</h6>
+        <p class="text-muted mb-1">By CIPLA</p>
+        <p class="text-decoration-line-through text-muted mb-1">MRP ₹148</p>
+        <p class="fw-bold mb-2">₹42 <span class="text-success">71% OFF</span></p>
+        <button class="btn w-100 text-white">Add to Cart</button>
+      </div></div>
+
+      <div class="swiper-slide"><div class="product-card">
+        <img src="https://emedshealth.com/images/medicines/shampoo_image1.jpeg">
+        <h6 class="fw-bold">Sugar Free Gold Plus Low Calorie</h6>
+        <p class="text-muted mb-1">By ERIS</p>
+        <p class="text-decoration-line-through text-muted mb-1">MRP ₹234</p>
+        <p class="fw-bold mb-2">₹199 <span class="text-success">15% OFF</span></p>
+        <button class="btn w-100 text-white">Add to Cart</button>
+      </div></div>
+
+      <div class="swiper-slide"><div class="product-card">
+        <img src="https://emedshealth.com/images/medicines/1767415457_medicine.jpg">
+        <h6 class="fw-bold">Ketonol Anti dandruff Shampoo</h6>
+        <p class="text-muted mb-1">By INTAS</p>
+        <p class="text-decoration-line-through text-muted mb-1">MRP ₹183</p>
+        <p class="fw-bold mb-2">₹44 <span class="text-success">75% OFF</span></p>
+        <button class="btn w-100 text-white">Add to Cart</button>
+      </div></div>
+
+      <div class="swiper-slide"><div class="product-card">
+        <img src="https://emedshealth.com/images/medicines/1766560185_medicine.jpg">
+        <h6 class="fw-bold">DALERT 100MG</h6>
+        <p class="text-muted mb-1">By SUN PHARMA</p>
+        <p class="text-decoration-line-through text-muted mb-1">MRP ₹230</p>
+        <p class="fw-bold mb-2">₹196 <span class="text-success">15% OFF</span></p>
+        <button class="btn w-100 text-white">Add to Cart</button>
+      </div></div>
+
+    </div>
+
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+
+  </div>
+
+</div>
+</section>
+
+
+
+
+
+
+
+
+
+  <section class="brand-section">
+<div class="container">
+
+  <div class="section-head">
+    <h5>Top Brands</h5>
+    <a href="#">See all ›</a>
+  </div>
+
+  <div class="swiper brandSwiper">
+    <div class="swiper-wrapper">
+
+      <!-- Brand 1 -->
+      <div class="swiper-slide">
+        <div class="brand-card">
+          <img src="https://emedshealth.com/images/20251231072808.jpeg">
+        </div>
+      </div>
+
+      <!-- Brand 2 -->
+      <div class="swiper-slide">
+        <div class="brand-card">
+          <img src="https://emedshealth.com/images/20251231075732.jpeg">
+        </div>
+      </div>
+
+      <!-- Brand 3 -->
+      <div class="swiper-slide">
+        <div class="brand-card">
+          <img src="https://emedshealth.com/images/zydus_wellness_logo.jpg">
+        </div>
+      </div>
+
+      <!-- Brand 4 -->
+      <div class="swiper-slide">
+        <div class="brand-card">
+          <img src="https://emedshealth.com/images/nanz_med_science_pharma_p_ltd_logo.jpg">
+        </div>
+      </div>
+
+      <!-- Brand 5 -->
+      <div class="swiper-slide">
+        <div class="brand-card">
+          <img src="https://emedshealth.com/images/20251231063951.jpeg">
+        </div>
+      </div>
+
+      <!-- Brand 6 -->
+      <div class="swiper-slide">
+        <div class="brand-card">
+          <img src="https://emedshealth.com/images/20260108062916.jpeg">
+        </div>
+      </div>
+
+      <!-- Brand 7 -->
+      <div class="swiper-slide">
+        <div class="brand-card">
+          <img src="https://emedshealth.com/images/20260108063122.jpeg">
+        </div>
+      </div>
+<div class="swiper-slide">
+        <div class="brand-card">
+          <img src="https://emedshealth.com/images/20251231063951.jpeg">
+        </div>
+      </div>
+
+      <!-- Brand 6 -->
+      <div class="swiper-slide">
+        <div class="brand-card">
+          <img src="https://emedshealth.com/images/20260108062916.jpeg">
+        </div>
+      </div>
+
+      <!-- Brand 7 -->
+      <div class="swiper-slide">
+        <div class="brand-card">
+          <img src="https://emedshealth.com/images/20260108063122.jpeg">
+        </div>
+      </div><div class="swiper-slide">
+        <div class="brand-card">
+          <img src="https://emedshealth.com/images/20251231063951.jpeg">
+        </div>
+      </div>
+
+      <!-- Brand 6 -->
+      <div class="swiper-slide">
+        <div class="brand-card">
+          <img src="https://emedshealth.com/images/20260108062916.jpeg">
+        </div>
+      </div>
+
+      <!-- Brand 7 -->
+      <div class="swiper-slide">
+        <div class="brand-card">
+          <img src="https://emedshealth.com/images/20260108063122.jpeg">
+        </div>
+      </div>
+      <!-- Brand 8 -->
+      <div class="swiper-slide">
+        <div class="brand-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Zandu_Logo.svg">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+
+</div>
+</section>
+
+
+<div class="container">
+  <div class="hero-banner">
+
+    <!-- LEFT TEXT -->
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="bi bi-shield-check"></i> 100% Genuine Products
+      </div>
+
+      <h1 class="hero-title">
+        Get Your Medicines & Health Care Products in Minutes
+      </h1>
+
+      <div class="hero-sub">
+        ⚡ Super-fast medicine delivery at your doorstep
+      </div>
+
+      <div class="hero-features">
+        <div class="feature-item">
+          <i class="bi bi-clock"></i> 30 Min Delivery
+        </div>
+        <div class="feature-item">
+          <i class="bi bi-patch-check"></i> Verified Medicines
+        </div>
+        <div class="feature-item">
+          <i class="bi bi-truck"></i> Free Delivery on ₹500+
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT IMAGE -->
+    <div class="hero-image">
+      <img src="delivery-man-deliver-medicine-order-illustration-svg-download-png-8778527.webp" alt="Medicine Delivery">
+    </div>
+
+  </div>
+</div>
+
+<section class="review-section">
+  <div class="container">
+
+    <h4 class="review-title">What customers say about Emeds Health</h4>
+
+    <div class="swiper reviewSwiper">
+      <div class="swiper-wrapper">
+
+        <!-- Review 1 (more varied content) -->
+        <div class="swiper-slide">
+          <div class="review-card">
+            <p class="review-text">
+              Medkart means saving a remarkable difference in pharmacies. For me, it's more important than maximizing savings. The trust and quality are unbeatable.
+            </p>
+            <div class="stars">★★★★★</div>
+            <div class="review-user">
+              <strong>Ruti Patel</strong>
+              <span>Surat</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="swiper-slide">
+          <div class="review-card">
+            <p class="review-text">
+              I've recently begun using Emeds Pharmacy, and I'm already impressed. Their delivery is prompt, customer service excellent, and packaging secure.
+            </p>
+            <div class="stars">★★★★★</div>
+            <div class="review-user">
+              <strong>Rajesh Joshi</strong>
+              <span>Kutch</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="swiper-slide">
+          <div class="review-card">
+            <p class="review-text">
+              The most trustworthy medicine vendor offering competitive rates. Staff is courteous and helps with the right choices. 100% genuine products.
+            </p>
+            <div class="stars">★★★★★</div>
+            <div class="review-user">
+              <strong>Subrata Majumdar</strong>
+              <span>Jaipur</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 4 -->
+        <div class="swiper-slide">
+          <div class="review-card">
+            <p class="review-text">
+              I am a fan of the Emeds platform! It's a one-stop destination for medicines, lab tests and healthcare items — all with seamless experience.
+            </p>
+            <div class="stars">★★★★★</div>
+            <div class="review-user">
+              <strong>Jignesh Patel</strong>
+              <span>Ahmedabad</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 5 - fresh one -->
+        <div class="swiper-slide">
+          <div class="review-card">
+            <p class="review-text">
+              Finally a pharmacy that cares about affordability without cutting corners. Every time I order, I feel valued. Highly recommend Emeds.
+            </p>
+            <div class="stars">★★★★★</div>
+            <div class="review-user">
+              <strong>Meera Krishnan</strong>
+              <span>Chennai</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 6 -->
+        <div class="swiper-slide">
+          <div class="review-card">
+            <p class="review-text">
+              They always have my prescribed medicines in stock. The refill reminder is a life saver. Great job, team Emeds!
+            </p>
+            <div class="stars">★★★★★</div>
+            <div class="review-user">
+              <strong>Arjun Mehta</strong>
+              <span>Mumbai</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 7 -->
+        <div class="swiper-slide">
+          <div class="review-card">
+            <p class="review-text">
+              Ordered at night, received next morning. That’s incredible. Plus they sent a free health guide. I'm impressed.
+            </p>
+            <div class="stars">★★★★★</div>
+            <div class="review-user">
+              <strong>Lata Shenoy</strong>
+              <span>Bengaluru</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 8 -->
+        <div class="swiper-slide">
+          <div class="review-card">
+            <p class="review-text">
+              Switched from local store to Emeds — saved almost 30% on monthly medicines. No more stock issues. Thank you!
+            </p>
+            <div class="stars">★★★★★</div>
+            <div class="review-user">
+              <strong>Dinesh Rathod</strong>
+              <span>Pune</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- navigation & pagination -->
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="banner-section">
+  <img src="mobilebanner.png" class="img-fluid">
+</section>
+
+<section class="blog-sectiontesti"> <!-- class updated to blog-sectiontesti -->
+  <div class="container">
+
+    <!-- title with testi suffix -->
+    <h4 class="blog-titletesti">Latest from health blog</h4>
+
+    <!-- swiper container: keep 'swiper' + our namespaced class blogSwipertesti -->
+    <div class="swiper blogSwipertesti">
+      <div class="swiper-wrapper">
+
+        <!-- CARD 1 - all custom classes now end with 'testi' -->
+        <div class="swiper-slide">
+          <div class="blog-cardtesti">
+            <div class="blog-imgtesti">
+              <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400&h=260&fit=crop&auto=format" alt="glp-1">
+            </div>
+            <div class="blog-contenttesti">
+              <h6>Everything to Know About GLP-1 Receptor Agonist</h6>
+              <p>Gentle skincare routines and triggers to avoid – derm</p>
+              <a href="#" class="read-linktesti">Read more</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="swiper-slide">
+          <div class="blog-cardtesti">
+            <div class="blog-imgtesti">
+              <img src="https://images.unsplash.com/photo-1601275868399-45bec4f4cd9d?w=400&h=260&fit=crop&auto=format" alt="baby care">
+            </div>
+            <div class="blog-contenttesti">
+              <h6>Caring for a Baby with Blocked Nose</h6>
+              <p>Gentle skincare routines and triggers to avoid – derm</p>
+              <a href="#" class="read-linktesti">Read more</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="swiper-slide">
+          <div class="blog-cardtesti">
+            <div class="blog-imgtesti">
+              <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400&h=260&fit=crop&auto=format" alt="kids vomiting">
+            </div>
+            <div class="blog-contenttesti">
+              <h6>Vomiting in Kids: Causes & Home Remedies</h6>
+              <p>Gentle skincare routines and triggers to avoid – derm</p>
+              <a href="#" class="read-linktesti">Read more</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="swiper-slide">
+          <div class="blog-cardtesti">
+            <div class="blog-imgtesti">
+              <img src="https://images.unsplash.com/photo-1546015720-b8b30df5aa27?w=400&h=260&fit=crop&auto=format" alt="rickets child">
+            </div>
+            <div class="blog-contenttesti">
+              <h6>Rickets in Children: Symptoms & Treatment</h6>
+              <p>Gentle skincare routines and triggers to avoid – derm</p>
+              <a href="#" class="read-linktesti">Read more</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 5 -->
+        <div class="swiper-slide">
+          <div class="blog-cardtesti">
+            <div class="blog-imgtesti">
+              <img src="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=400&h=260&fit=crop&auto=format" alt="baby loose motion">
+            </div>
+            <div class="blog-contenttesti">
+              <h6>Baby Loose Motion: Causes & Remedies</h6>
+              <p>Gentle skincare routines and triggers to avoid – derm</p>
+              <a href="#" class="read-linktesti">Read more</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 6 -->
+        <div class="swiper-slide">
+          <div class="blog-cardtesti">
+            <div class="blog-imgtesti">
+              <img src="https://images.unsplash.com/photo-1584362917165-526a968579e8?w=400&h=260&fit=crop&auto=format" alt="immunity">
+            </div>
+            <div class="blog-contenttesti">
+              <h6>Boost Kids' Immunity Naturally</h6>
+              <p>Gentle skincare routines and triggers to avoid – derm</p>
+              <a href="#" class="read-linktesti">Read more</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 7 -->
+        <div class="swiper-slide">
+          <div class="blog-cardtesti">
+            <div class="blog-imgtesti">
+              <img src="https://images.unsplash.com/photo-1631815588090-d1bfec5b8a74?w=400&h=260&fit=crop&auto=format" alt="fever">
+            </div>
+            <div class="blog-contenttesti">
+              <h6>Fever in Children: Myths vs Facts</h6>
+              <p>Gentle skincare routines and triggers to avoid – derm</p>
+              <a href="#" class="read-linktesti">Read more</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 8 -->
+        <div class="swiper-slide">
+          <div class="blog-cardtesti">
+            <div class="blog-imgtesti">
+              <img src="https://images.unsplash.com/photo-1594824476967-48c8b9642738?w=400&h=260&fit=crop&auto=format" alt="eczema">
+            </div>
+            <div class="blog-contenttesti">
+              <h6>Baby Eczema: Soothing Tips</h6>
+              <p>Gentle skincare routines and triggers to avoid – derm</p>
+              <a href="#" class="read-linktesti">Read more</a>
+            </div>
+          </div>
+        </div>
+
+      </div> <!-- swiper-wrapper -->
+
+      <!-- navigation arrows (purple) – classes remain standard swiper classes -->
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+
+      <!-- pagination dots (standard) -->
+      <div class="swiper-pagination"></div>
+    </div>
+
+  </div> <!-- container -->
+</section>
+
+<section class="faq-section">
+
+<div class="faq-box">
+
+<h2 class="faq-title">Emeds Health - India’s most preferred medical store for buying Generic Medicines Online</h2>
+
+<div class="accordion" id="faqAccordion">
+
+<div class="accordion-item">
+  <h2 class="accordion-header">
+    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#q1">
+      What are generic medicines?
+    </button>
+  </h2>
+  <div id="q1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+    <div class="accordion-body">
+      Generic medicines are affordable alternatives to branded medicines with the same active ingredients.
+    </div>
+  </div>
+</div>
+
+<div class="accordion-item">
+  <h2 class="accordion-header">
+    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#q2">
+      What distinguishes Medkart Pharmacy from other online pharmacies?
+    </button>
+  </h2>
+  <div id="q2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+    <div class="accordion-body">
+      Medkart offers certified generic medicines at the lowest prices with fast delivery.
+    </div>
+  </div>
+</div>
+
+<div class="accordion-item">
+  <h2 class="accordion-header">
+    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#q3">
+      Can I buy generic medicines online from Medkart?
+    </button>
+  </h2>
+  <div id="q3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+    <div class="accordion-body">
+      Yes, you can upload your prescription and order medicines online easily.
+    </div>
+  </div>
+</div>
+
+<div class="accordion-item">
+  <h2 class="accordion-header">
+    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#q4">
+      How can I be sure generic medicines are safe?
+    </button>
+  </h2>
+  <div id="q4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+    <div class="accordion-body">
+      All medicines are FDA & GMP certified and quality tested.
+    </div>
+  </div>
+</div>
+
+<div class="accordion-item">
+  <h2 class="accordion-header">
+    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#q5">
+      Does Medkart deliver medicines at home?
+    </button>
+  </h2>
+  <div id="q5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+    <div class="accordion-body">
+      Yes, we deliver medicines to your doorstep across India.
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+</section>
+
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const swiper = new Swiper(".reviewSwiper", {
+    spaceBetween: 20,
+    speed: 600,
+    loop: true,                     // infinite loop feels premium
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+      dynamicBullets: false,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    breakpoints: {
+      0: { slidesPerView: 1.3 },
+      640: { slidesPerView: 2 },
+      1024: { slidesPerView: 3 },
+      1280: { slidesPerView: 4 }
+    },
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false,
+      pauseOnMouseEnter: true,
+    },
+  });
+</script>
+
+<script>
+  // Swiper initialization using the namespaced class: blogSwipertesti
+  new Swiper(".blogSwipertesti", {
+    speed: 600,
+    spaceBetween: 20,
+    loop: true,
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false,
+      pauseOnMouseEnter: true,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+      dynamicBullets: false,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    breakpoints: {
+      0: { slidesPerView: 1.2, spaceBetween: 12 },
+      576: { slidesPerView: 2, spaceBetween: 16 },
+      768: { slidesPerView: 3, spaceBetween: 18 },
+      992: { slidesPerView: 4, spaceBetween: 20 },
+      1200: { slidesPerView: 5, spaceBetween: 20 }
+    }
+  });
+</script>
+
+<script>
+new Swiper(".brandSwiper", {
+  spaceBetween:14,
+  speed:600,
+  navigation:{
+    nextEl:".swiper-button-next",
+    prevEl:".swiper-button-prev",
+  },
+  breakpoints:{
+    0:{ slidesPerView:2 },
+    576:{ slidesPerView:3 },
+    768:{ slidesPerView:4 },
+    992:{ slidesPerView:6 },
+    1200:{ slidesPerView:7 } // DESKTOP
+  }
+});
+</script>
+<script>
+new Swiper(".productSwiper", {
+  spaceBetween:15,
+  speed:600,
+  navigation:{
+    nextEl:".swiper-button-next",
+    prevEl:".swiper-button-prev",
+  },
+  breakpoints:{
+    0:{ slidesPerView:2.3 },      // small mobile → 4 visible
+    576:{ slidesPerView:3 },    // bigger mobile → 4
+    768:{ slidesPerView:4 },    // tablet → 4
+    1200:{ slidesPerView:5 }    // desktop → 5
+  }
+});
+</script>
+
+<script>
+new Swiper(".categorySwiper", {
+  spaceBetween:14,
+  speed:600,
+  navigation:{
+    nextEl:".swiper-button-next",
+    prevEl:".swiper-button-prev",
+  },
+  breakpoints:{
+    0:{slidesPerView:2},
+    576:{slidesPerView:3},
+    768:{slidesPerView:4},
+    992:{slidesPerView:6},
+    1200:{slidesPerView:7}
+  }
+});
+</script>
+<script>
+new Swiper(".bannerSwiper", {
+    loop: true,
+    autoplay: { delay: 5000, disableOnInteraction: false },
+    speed: 800,
+    navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+    },
+    pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+    },
+});
+</script>
+<!-- optional small note: the color #6e00ff is used across title underline, arrows (bg on hover & default icon), pagination active, location dot, hover border etc. -->
+</body>
+</html>

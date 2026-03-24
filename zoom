@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Amazon Style Image Magnifier</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="product-container">
+  <!-- Main Image -->
+  <div class="img-container">
+    <img id="productImg" src="https://m.media-amazon.com/images/I/81Zt42ioCgL._SX679_.jpg">
+    <div id="lens"></div>
+  </div>
+
+  <!-- Zoom Result -->
+  <div id="result"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

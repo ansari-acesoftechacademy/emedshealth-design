@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Popular Categories Slider</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+<style>
+body{
+  background:#fff;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+/* section */
+.category-section{
+  padding:30px 0;
+}
+
+/* heading row */
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+}
+
+/* Title underline */
+.section-title{
+  position:relative;
+  display:inline-block;
+}
+
+.section-title h5{
+  font-weight:600;
+  font-size:18px;
+  margin:0;
+}
+
+/* purple line */
+.section-title::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-6px;
+  width:50px;
+  height:3px;
+  background:#6e00ff;
+  border-radius:10px;
+}
+
+/* See all link */
+.section-head a{
+  font-size:14px;
+  text-decoration:none;
+  color:#6e00ff;
+  font-weight:500;
+}
+
+/* CATEGORY CARD */
+.cat-card{
+  height:155px;
+  border-radius:12px;
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:#fff;
+  position:relative;
+  transition:.25s;
+}
+
+/* pastel bg colors */
+.bg1{background:#f4e9ff;}
+.bg2{background:#ffe9f4;}
+.bg3{background:#e9fff2;}
+.bg4{background:#e9efff;}
+.bg5{background:#fff6e0;}
+.bg6{background:#f2e9ff;}
+.bg7{background:#e9f9ff;}
+
+/* image */
+.cat-card img{
+  width:90%;
+  max-height:90px;
+  object-fit:contain;
+  margin-bottom:6px;
+  transform:translateY(-5px);
+}
+
+/* title */
+.cat-card p{
+  font-size:13px;
+  font-weight:600;
+  margin:0;
+}
+
+/* hover */
+.cat-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 10px 22px rgba(110,0,255,.25);
+}
+
+/* swiper arrows */
+.categorySwiper .swiper-button-next,
+.categorySwiper .swiper-button-prev{
+  width:34px;
+  height:34px;
+  background:#6e00ff;
+  border-radius:50%;
+  box-shadow:0 3px 10px rgba(0,0,0,.2);
+}
+
+.categorySwiper .swiper-button-next::after,
+.categorySwiper .swiper-button-prev::after{
+  font-size:14px;
+  color:#fff;
+}
+
+/* hide arrows on mobile */
+@media(max-width:576px){
+  .categorySwiper .swiper-button-next,
+  .categorySwiper .swiper-button-prev{
+    display:none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<section class="category-section">
+<div class="container">
+
+<!-- Heading -->
+<div class="section-head">
+  <div class="section-title">
+    <h5>Popular Categories</h5>
+  </div>
+  <a href="#">See all ›</a>
+</div>
+
+<!-- Slider -->
+<div class="swiper categorySwiper">
+<div class="swiper-wrapper">
+
+<div class="swiper-slide">
+  <div class="cat-card bg1">
+    <img src="https://www.1mg.com/images/categories/18.png">
+    <p>Vitamins & Supplements</p>
+  </div>
+</div>
+
+<div class="swiper-slide">
+  <div class="cat-card bg2">
+    <img src="https://www.1mg.com/images/categories/24.png">
+    <p>Nutritional Drinks</p>
+  </div>
+</div>
+
+<div class="swiper-slide">
+  <div class="cat-card bg3">
+    <img src="https://www.1mg.com/images/categories/14.png">
+    <p>Skin Care</p>
+  </div>
+</div>
+
+<div class="swiper-slide">
+  <div class="cat-card bg4">
+    <img src="https://www.1mg.com/images/categories/11.png">
+    <p>Hair Care</p>
+  </div>
+</div>
+
+<div class="swiper-slide">
+  <div class="cat-card bg5">
+    <img src="https://www.1mg.com/images/categories/20.png">
+    <p>Sexual Wellness</p>
+  </div>
+</div>
+
+<div class="swiper-slide">
+  <div class="cat-card bg6">
+    <img src="https://www.1mg.com/images/categories/9.png">
+    <p>Ayurveda Products</p>
+  </div>
+</div>
+
+<div class="swiper-slide">
+  <div class="cat-card bg7">
+    <img src="https://www.1mg.com/images/categories/6.png">
+    <p>Pain Relief</p>
+  </div>
+</div>
+
+</div>
+
+<div class="swiper-button-next"></div>
+<div class="swiper-button-prev"></div>
+
+</div>
+</div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+new Swiper(".categorySwiper", {
+  spaceBetween:14,
+  speed:600,
+  navigation:{
+    nextEl:".swiper-button-next",
+    prevEl:".swiper-button-prev",
+  },
+  breakpoints:{
+    0:{slidesPerView:2},
+    576:{slidesPerView:3},
+    768:{slidesPerView:4},
+    992:{slidesPerView:6},
+    1200:{slidesPerView:7}
+  }
+});
+</script>
+
+</body>
+</html>

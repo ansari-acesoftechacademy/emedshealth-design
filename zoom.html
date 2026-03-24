@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Amazon Style Image Magnifier</title>
+<style>
+.zoom-wrapper {
+  display: flex;
+  gap: 20px;
+  margin: 40px;
+}
+
+.img-box {
+  position: relative;
+  width: 350px;
+}
+
+.img-box img {
+  width: 100%;
+  display: block;
+}
+
+#lens {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border: 2px solid #007185;
+  background: rgba(255,255,255,0.3);
+  display: none;
+  cursor: crosshair;
+  pointer-events: none; /* lens ko mouse event se hatane ke liye */
+}
+
+#zoomBox {
+  width: 420px;
+  height: 420px;
+  border: 1px solid #ccc;
+  background-repeat: no-repeat;
+  display: none;
+  background-color: #f5f5f5;
+}
+</style>
+</head>
+<body>
+
+<div class="zoom-wrapper">
+  <div class="img-box">
+    <img id="mainImg" src="https://m.media-amazon.com/images/I/81Zt42ioCgL._SX679_.jpg" alt="Product Image">
+    <div id="lens"></div>
+  </div>
+
+  <div id="zoomBox"></div>
+</div>
+
+<script>
+// ❌ Aapke code mein do <script> tags the, ek extra tha
+// ✅ Yeh sahi code hai:
+
+const img = document.getElementById("mainImg");
+const lens = document.getElementById("lens");
+const zoomBox = document.getElementById("zoomBox");
+
+img.addEventListener("mouseenter", showZoom);
+img.addEventListener("mousemove", moveLens);
+img.addEventListener("mouseleave", hideZoom);
+
+function showZoom() {
+  lens.style.display = "block";
+  zoomBox.style.display = "block";
+
+  // Zoom ratio calculate karo
+  const zoomRatio = zoomBox.offsetWidth / lens.offsetWidth;
+
+  zoomBox.style.backgroundImage = `url('${img.src}')`;
+  zoomBox.style.backgroundSize = `${img.width * zoomRatio}px ${img.height * zoomRatio}px`;
+}
+
+function hideZoom() {
+  lens.style.display = "none";
+  zoomBox.style.display = "none";
+}
+
+function moveLens(e) {
+  const rect = img.getBoundingClientRect();
+
+  // Mouse position relative to image
+  let x = e.clientX - rect.left;
+  let y = e.clientY - rect.top;
+
+  // Lens ko cursor ke center mein rakhna
+  let lensX = x - lens.offsetWidth / 2;
+  let lensY = y - lens.offsetHeight / 2;
+
+  // Boundary check - lens image se bahar na jaye
+  if (lensX < 0) lensX = 0;
+  if (lensY < 0) lensY = 0;
+  if (lensX > img.offsetWidth - lens.offsetWidth)
+    lensX = img.offsetWidth - lens.offsetWidth;
+  if (lensY > img.offsetHeight - lens.offsetHeight)
+    lensY = img.offsetHeight - lens.offsetHeight;
+
+  lens.style.left = lensX + "px";
+  lens.style.top = lensY + "px";
+
+  // Zoom ratio for background positioning
+  const zoomRatio = zoomBox.offsetWidth / lens.offsetWidth;
+
+  // Background position for zoom box
+  // lensX aur lensY ke according background move karo
+  const bgX = lensX * zoomRatio;
+  const bgY = lensY * zoomRatio;
+
+  zoomBox.style.backgroundPosition = `-${bgX}px -${bgY}px`;
+}
+</script>
+
+<!-- Optional: Instructions -->
+<div style="text-align: center; margin-top: 20px; color: #555; font-family: Arial;">
+  <p>👆 Hover over the image to see magnifier effect</p>
+</div>
+
+</body>
+</html>
